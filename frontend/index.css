@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+  
+  body {
+    @apply font-body text-dark bg-light antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-xl font-heading font-semibold text-base cursor-pointer transition-all duration-300 inline-flex items-center gap-2 justify-center;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary-dark hover:-translate-y-0.5 hover:shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-white hover:bg-secondary-dark hover:-translate-y-0.5 hover:shadow-lg;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent text-primary border-2 border-primary hover:bg-primary hover:text-white;
+  }
+  
+  .btn-block {
+    @apply w-full;
+  }
+  
+  .form-input,
+  .form-textarea,
+  .form-select {
+    @apply w-full px-4 py-3.5 border-2 border-gray-200 rounded-xl font-body text-base transition-all duration-300 bg-white focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10;
+  }
+  
+  .form-textarea {
+    @apply resize-y min-h-[120px];
+  }
+  
+  .form-label {
+    @apply block mb-2 font-semibold text-dark text-sm uppercase tracking-wide;
+  }
+  
+  .loading-spinner {
+    @apply w-12 h-12 border-4 border-gray-200 border-t-primary rounded-full animate-spin;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-8;
+  }
+  
+  .container-sm {
+    @apply max-w-2xl mx-auto px-8;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent;
+  }
+  
+  .bg-gradient-primary {
+    @apply bg-gradient-to-br from-primary to-accent;
+  }
+  
+  .bg-gradient-hero {
+    @apply bg-gradient-to-br from-blue-50 via-cyan-50 to-amber-50;
+  }
+  
+  .shadow-custom {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  .shadow-custom-md {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+  
+  .shadow-custom-lg {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
+  }
+}
