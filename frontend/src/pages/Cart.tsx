@@ -50,7 +50,7 @@ const Cart = () => {
           </div>
           <h1 className="text-3xl font-heading font-extrabold mb-4 text-gray-900">Your cart is empty</h1>
           <p className="text-gray-600 mb-8">Start adding medicines to your cart</p>
-          <Link to="/products" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-medical-primary to-medical-secondary text-white rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:shadow-xl">
+          <Link to="/products" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:shadow-xl">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
@@ -64,7 +64,7 @@ const Cart = () => {
   return (
     <div className="container-custom py-12">
       <div className="flex items-center gap-3 mb-8">
-        <svg className="w-8 h-8 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
         <h1 className="text-4xl font-heading font-extrabold text-gray-900">Shopping Cart</h1>
@@ -146,7 +146,7 @@ const Cart = () => {
                     {/* Price */}
                     <div className="text-right">
                       <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Price</p>
-                      <p className="text-2xl font-bold text-medical-primary">₹{(parseFloat(item.product.price) * item.quantity).toFixed(2)}</p>
+                      <p className="text-2xl font-bold text-blue-600">₹{(parseFloat(item.product.price) * item.quantity).toFixed(2)}</p>
                       <p className="text-xs text-gray-500">₹{item.product.price} each</p>
                     </div>
                   </div>
@@ -160,7 +160,7 @@ const Cart = () => {
         <div className="lg:col-span-1">
           <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200 sticky top-24">
             <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-              <svg className="w-6 h-6 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
               Order Summary
@@ -177,13 +177,13 @@ const Cart = () => {
               </div>
               <div className="border-t-2 border-gray-200 pt-3 flex justify-between items-center">
                 <span className="text-lg font-bold text-gray-900">Total</span>
-                <span className="text-3xl font-bold text-medical-primary">₹{total.toFixed(2)}</span>
+                <span className="text-3xl font-bold text-blue-600">₹{total.toFixed(2)}</span>
               </div>
             </div>
 
             <Link 
               to="/checkout" 
-              className="w-full py-4 bg-gradient-to-r from-medical-primary to-medical-secondary text-white rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:shadow-xl flex items-center justify-center gap-2 mb-4"
+              className="w-full py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:shadow-xl flex items-center justify-center gap-2 mb-4"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -204,19 +204,19 @@ const Cart = () => {
             {/* Trust Indicators */}
             <div className="mt-6 pt-6 border-t border-gray-200 space-y-3">
               <div className="flex items-center gap-2 text-sm text-gray-600">
-                <svg className="w-5 h-5 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
                 <span>Secure Checkout</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">
-                <svg className="w-5 h-5 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
                 <span>Fast Delivery</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">
-                <svg className="w-5 h-5 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
                 </svg>
                 <span>Easy Returns</span>

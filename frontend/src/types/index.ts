@@ -11,6 +11,11 @@ export interface User {
   city?: string;
   country?: string;
   postal_code?: string;
+  is_staff: boolean;           // Added
+  is_superuser: boolean;        // Added
+  is_active: boolean;           // Added
+  date_joined: string;          // Added
+  last_login?: string;          // Added (optional)
 }
 
 export interface Category {
@@ -18,6 +23,7 @@ export interface Category {
   name: string;
   slug: string;
   description?: string;
+  image?: string;               // Added (if you have category images)
   created_at: string;
 }
 
@@ -70,13 +76,17 @@ export interface OrderItem {
 
 export interface Order {
   id: number;
+  order_number?: string;        // Added
   user: string;
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  payment_status: 'pending' | 'paid' | 'failed' | 'refunded';  // Added
   total_amount: string;
   shipping_address: string;
   shipping_city: string;
+  shipping_state?: string;      // Added
   shipping_country: string;
   shipping_postal_code: string;
+  shipping_phone?: string;      // Added
   phone: string;
   payment_method: string;
   is_paid: boolean;
@@ -116,7 +126,8 @@ export interface ProductState {
 }
 
 export interface LoginCredentials {
-  email: string;
+  email?: string;               // Made optional
+  username?: string;            // Added for username login
   password: string;
 }
 
@@ -127,13 +138,93 @@ export interface RegisterData {
   password2: string;
   first_name?: string;
   last_name?: string;
+  phone?: string;               // Added
 }
 
 export interface CheckoutData {
   shipping_address: string;
   shipping_city: string;
+  shipping_state?: string;      // Added
   shipping_country: string;
   shipping_postal_code: string;
   phone: string;
   payment_method: string;
+}
+
+// Admin Panel Types
+export interface AdminStats {
+  total_products: number;
+  total_orders: number;
+  total_users: number;
+  total_revenue: string;
+  low_stock_products: number;
+  pending_orders: number;
+}
+
+export interface AdminProduct extends Product {
+  category_name?: string;
+}
+
+export interface AdminUser extends User {
+  total_orders?: number;
+  total_spent?: string;
+}
+
+export interface AdminOrder extends Order {
+  user_email?: string;
+  user_name?: string;
+  items_count?: number;
+}
+
+export interface AdminCategory extends Category {
+  products_count?: number;
+}
+
+// API Response Types
+export interface ApiResponse<T> {
+  data: T;
+  message?: string;
+  status: number;
+}
+
+export interface PaginatedResponse<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+}
+
+export interface LoginResponse {
+  access: string;
+  refresh: string;
+  user?: User;
+}
+
+export interface RegisterResponse {
+  user: User;
+  access: string;
+  refresh: string;
+}
+
+// Filter and Sort Types
+export interface ProductFilters {
+  category?: string;
+  search?: string;
+  min_price?: number;
+  max_price?: number;
+  is_available?: boolean;
+  ordering?: string;
+  page?: number;
+}
+
+export interface AdminFilters {
+  search?: string;
+  status?: string;
+  payment_status?: string;
+  is_staff?: boolean;
+  is_active?: boolean;
+  start_date?: string;
+  end_date?: string;
+  filter?: string;
+  category?: string;
 }

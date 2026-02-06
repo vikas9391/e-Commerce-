@@ -10,6 +10,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   if (!isAuthenticated) {
+    // Redirect to login page with smooth navigation
     return <Navigate to="/login" replace />;
   }
 

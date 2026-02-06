@@ -50,7 +50,7 @@ const Checkout = () => {
   return (
     <div className="container-custom py-12">
       <div className="flex items-center gap-3 mb-8">
-        <svg className="w-8 h-8 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <h1 className="text-4xl font-heading font-extrabold text-gray-900">Checkout</h1>
@@ -63,7 +63,7 @@ const Checkout = () => {
             {/* Shipping Information */}
             <div className="bg-white p-8 rounded-xl shadow-md border border-gray-200">
               <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <svg className="w-6 h-6 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
@@ -137,21 +137,21 @@ const Checkout = () => {
             {/* Payment Method */}
             <div className="bg-white p-8 rounded-xl shadow-md border border-gray-200">
               <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <svg className="w-6 h-6 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
                 Payment Method
               </h2>
 
               <div className="space-y-3">
-                <label className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-medical-primary transition-colors">
+                <label className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-600 transition-colors">
                   <input 
                     type="radio" 
                     name="payment" 
                     value="card"
                     checked={formData.payment_method === 'card'}
                     onChange={(e) => setFormData({ ...formData, payment_method: e.target.value })}
-                    className="w-5 h-5 text-medical-primary"
+                    className="w-5 h-5 text-blue-600"
                   />
                   <div className="ml-3 flex items-center gap-3">
                     <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,14 +164,14 @@ const Checkout = () => {
                   </div>
                 </label>
 
-                <label className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-medical-primary transition-colors">
+                <label className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-600 transition-colors">
                   <input 
                     type="radio" 
                     name="payment" 
                     value="cod"
                     checked={formData.payment_method === 'cod'}
                     onChange={(e) => setFormData({ ...formData, payment_method: e.target.value })}
-                    className="w-5 h-5 text-medical-primary"
+                    className="w-5 h-5 text-blue-600"
                   />
                   <div className="ml-3 flex items-center gap-3">
                     <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -184,14 +184,14 @@ const Checkout = () => {
                   </div>
                 </label>
 
-                <label className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-medical-primary transition-colors">
+                <label className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-600 transition-colors">
                   <input 
                     type="radio" 
                     name="payment" 
                     value="upi"
                     checked={formData.payment_method === 'upi'}
                     onChange={(e) => setFormData({ ...formData, payment_method: e.target.value })}
-                    className="w-5 h-5 text-medical-primary"
+                    className="w-5 h-5 text-blue-600"
                   />
                   <div className="ml-3 flex items-center gap-3">
                     <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -209,7 +209,7 @@ const Checkout = () => {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full py-4 bg-gradient-to-r from-medical-primary to-medical-secondary text-white rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>
@@ -235,7 +235,7 @@ const Checkout = () => {
         <div className="lg:col-span-1">
           <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200 sticky top-24">
             <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-              <svg className="w-6 h-6 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
               Order Summary
@@ -253,7 +253,7 @@ const Checkout = () => {
                   <div className="flex-1">
                     <p className="font-semibold text-sm text-gray-900 line-clamp-2">{item.product.name}</p>
                     <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
-                    <p className="text-sm font-bold text-medical-primary">₹{(parseFloat(item.product.price) * item.quantity).toFixed(2)}</p>
+                    <p className="text-sm font-bold text-blue-600">₹{(parseFloat(item.product.price) * item.quantity).toFixed(2)}</p>
                   </div>
                 </div>
               ))}
@@ -271,7 +271,7 @@ const Checkout = () => {
               </div>
               <div className="border-t-2 border-gray-200 pt-3 flex justify-between items-center">
                 <span className="text-lg font-bold text-gray-900">Total Amount</span>
-                <span className="text-3xl font-bold text-medical-primary">₹{total.toFixed(2)}</span>
+                <span className="text-3xl font-bold text-blue-600">₹{total.toFixed(2)}</span>
               </div>
             </div>
 

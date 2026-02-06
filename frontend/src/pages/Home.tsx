@@ -24,31 +24,31 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full antialiased">
       {/* Hero Section */}
       <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-cyan-50 py-16 px-8">
         <div className="max-w-[900px] text-center z-10 relative animate-fadeInUp">
           {/* Medical Icon */}
           <div className="flex justify-center mb-6">
-            <div className="w-20 h-20 bg-gradient-to-br from-medical-primary to-medical-secondary rounded-2xl flex items-center justify-center shadow-lg">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl flex items-center justify-center shadow-lg">
               <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
             </div>
           </div>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold mb-6 leading-tight text-gray-900">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold mb-6 leading-tight text-gray-900 antialiased">
             Your Health,
-            <span className="block bg-gradient-to-r from-medical-primary to-medical-secondary bg-clip-text text-transparent"> Our Priority</span>
+            <span className="block mt-2 text-blue-600 antialiased"> Our Priority</span>
           </h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-gray-600 mb-10 max-w-[700px] mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl text-gray-700 mb-10 max-w-[700px] mx-auto leading-relaxed font-medium antialiased">
             Quality medicines delivered to your doorstep. Licensed pharmacy with certified healthcare products.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
               to="/products" 
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-medical-primary to-medical-secondary text-white rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 shadow-md"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -58,7 +58,7 @@ const Home = () => {
             
             <Link 
               to="/prescription-upload" 
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white border-2 border-medical-primary text-medical-primary rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:bg-medical-primary hover:text-white"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-white border-2 border-blue-600 text-blue-600 rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:bg-blue-600 hover:text-white shadow-md hover:shadow-xl"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -68,36 +68,33 @@ const Home = () => {
           </div>
 
           {/* Trust Indicators */}
-          <div className="flex flex-wrap justify-center items-center gap-6 mt-12">
-            <div className="flex items-center gap-2 text-gray-600 text-sm">
-              <svg className="w-5 h-5 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex flex-wrap justify-center items-center gap-6 mt-12 bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-sm">
+            <div className="flex items-center gap-2 text-gray-800 text-sm">
+              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
-              <span className="font-semibold">Licensed Pharmacy</span>
+              <span className="font-bold">Licensed Pharmacy</span>
             </div>
-            <div className="flex items-center gap-2 text-gray-600 text-sm">
-              <svg className="w-5 h-5 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-2 text-gray-800 text-sm">
+              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
-              <span className="font-semibold">Genuine Products</span>
+              <span className="font-bold">Genuine Products</span>
             </div>
-            <div className="flex items-center gap-2 text-gray-600 text-sm">
-              <svg className="w-5 h-5 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-2 text-gray-800 text-sm">
+              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="font-semibold">24/7 Support</span>
+              <span className="font-bold">24/7 Support</span>
             </div>
           </div>
         </div>
 
-        {/* Background Medical Icons */}
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-5">
-          <svg className="absolute top-20 left-20 w-32 h-32 text-medical-primary" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" clipRule="evenodd" />
-          </svg>
-          <svg className="absolute bottom-20 right-20 w-40 h-40 text-medical-secondary" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6z" />
-          </svg>
+        {/* Decorative Circles with animate-float */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+          <div className="absolute w-[300px] h-[300px] -top-[100px] -left-[100px] rounded-full bg-gradient-to-br from-blue-500/15 to-cyan-500/15 animate-float"></div>
+          <div className="absolute w-[200px] h-[200px] bottom-12 right-24 rounded-full bg-gradient-to-br from-blue-500/15 to-cyan-500/15 animate-float" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute w-[150px] h-[150px] top-1/2 -right-12 rounded-full bg-gradient-to-br from-blue-500/15 to-cyan-500/15 animate-float" style={{ animationDelay: '4s' }}></div>
         </div>
       </section>
 
@@ -105,14 +102,14 @@ const Home = () => {
       <section className="max-w-[1400px] mx-auto py-20 px-8">
         <div className="flex justify-between items-center mb-12">
           <div>
-            <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-gray-900 mb-2">
+            <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-gray-900 mb-2 antialiased">
               Featured Medicines
             </h2>
-            <p className="text-gray-600">Trusted healthcare products for your wellbeing</p>
+            <p className="text-gray-700 font-medium antialiased">Trusted healthcare products for your wellbeing</p>
           </div>
           <Link 
             to="/products" 
-            className="flex items-center gap-2 text-medical-primary font-bold text-base transition-all duration-300 hover:gap-3"
+            className="flex items-center gap-2 text-blue-600 font-bold text-base transition-all duration-300 hover:gap-3 hover:text-blue-700"
           >
             View All
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,7 +121,7 @@ const Home = () => {
         {loading ? (
           <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
             <div className="loading-spinner"></div>
-            <p className="text-gray-600">Loading medicines...</p>
+            <p className="text-gray-700 font-medium antialiased">Loading medicines...</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 animate-fadeIn">
@@ -141,10 +138,10 @@ const Home = () => {
       <section className="bg-gray-50 py-20">
         <div className="max-w-[1400px] mx-auto px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-heading font-extrabold text-gray-900 mb-4">
+            <h2 className="text-4xl font-heading font-extrabold text-gray-900 mb-4 antialiased">
               Why Choose MediCare?
             </h2>
-            <p className="text-gray-600 text-lg">Your health and safety are our top priorities</p>
+            <p className="text-gray-700 text-lg font-medium antialiased">Your health and safety are our top priorities</p>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -190,11 +187,11 @@ const Home = () => {
                 key={index}
                 className="text-center p-8 bg-white rounded-xl shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-gray-100"
               >
-                <div className="text-medical-primary mb-4 flex justify-center">
+                <div className="text-blue-600 mb-4 flex justify-center">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-heading font-bold mb-3 text-gray-900">{feature.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl font-heading font-bold mb-3 text-gray-900 antialiased">{feature.title}</h3>
+                <p className="text-gray-700 text-sm leading-relaxed font-medium antialiased">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -204,4 +201,4 @@ const Home = () => {
   );
 };
 
-export default Home; 
+export default Home;

@@ -8,6 +8,8 @@ urlpatterns = [
     path('api/auth/', include('accounts.urls')),
     path('api/products/', include('products.urls')),
     path('api/orders/', include('orders.urls')),
+    path('api/admin-panel/', include('admin_panel.urls')),
+
 ]
 
 if settings.DEBUG:

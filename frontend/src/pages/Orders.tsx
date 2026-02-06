@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ordersAPI } from '../services/api';
 import { Order } from '../types';
 
+
 const Orders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
@@ -9,16 +10,16 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await ordersAPI.getAll();
-        setOrders(response.data);
+        const response = await ordersAPI.getAll<PaginatedResponse<Order>>();
+        setOrders(response.data.results);
       } catch (error) {
-        console.error('Error fetching orders:', error);
+       console.error('Error fetching orders:', error);
       } finally {
         setLoading(false);
-      }
-    };
-    fetchOrders();
-  }, []);
+    }
+  };
+  fetchOrders();
+}, []);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -71,7 +72,7 @@ const Orders = () => {
   return (
     <div className="container-custom py-12">
       <div className="flex items-center gap-3 mb-8">
-        <svg className="w-8 h-8 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
         </svg>
         <h1 className="text-4xl font-heading font-extrabold text-gray-900">My Orders</h1>
@@ -86,7 +87,7 @@ const Orders = () => {
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">No orders yet</h2>
           <p className="text-gray-600 mb-8">Start ordering medicines from our store</p>
-          <a href="/products" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-medical-primary to-medical-secondary text-white rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:shadow-xl">
+          <a href="/products" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-heading font-bold text-lg transition-all duration-300 hover:shadow-xl">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
@@ -100,7 +101,7 @@ const Orders = () => {
               <div className="flex justify-between items-start mb-6">
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
-                    <svg className="w-6 h-6 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
                     Order #{order.id}
@@ -121,14 +122,14 @@ const Orders = () => {
                     {getStatusIcon(order.status)}
                     {order.status}
                   </span>
-                  <p className="text-3xl font-bold text-medical-primary mt-3">₹{order.total_amount}</p>
+                  <p className="text-3xl font-bold text-blue-600 mt-3">₹{order.total_amount}</p>
                 </div>
               </div>
 
               {/* Order Items */}
               <div className="border-t border-gray-200 pt-6">
                 <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                   </svg>
                   Order Items
@@ -137,7 +138,7 @@ const Orders = () => {
                   {order.items.map(item => (
                     <div key={item.id} className="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">
                       <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-medical-primary rounded-full"></div>
+                        <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
                         <span className="text-gray-700">{item.product.name}</span>
                         <span className="text-sm text-gray-500">× {item.quantity}</span>
                       </div>
@@ -150,7 +151,7 @@ const Orders = () => {
               {/* Shipping Address */}
               <div className="border-t border-gray-200 pt-6 mt-6">
                 <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-medical-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
