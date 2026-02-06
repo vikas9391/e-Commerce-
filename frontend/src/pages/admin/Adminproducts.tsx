@@ -14,8 +14,11 @@ const AdminProducts = () => {
 
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const response = await adminAPI.getProducts();
-      setProducts(response.data.results || response.data);
+      const data = response.data;
+      const productsData = Array.isArray(data) ? data : (data as any).results || [];
+      setProducts(productsData);
     } catch (error) {
       console.error('Error fetching products:', error);
     } finally {
@@ -112,7 +115,9 @@ const AdminProducts = () => {
                     <p className="font-bold text-gray-900">{product.name}</p>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-sm text-gray-600">{product.category?.name}</span>
+                    <span className="text-sm text-gray-600">
+                      {typeof product.category === 'object' ? product.category.name : product.category_name}
+                    </span>
                   </td>
                   <td className="px-6 py-4">
                     <span className="font-bold text-blue-600">₹{product.price}</span>

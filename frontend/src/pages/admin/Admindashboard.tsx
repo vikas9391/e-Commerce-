@@ -21,6 +21,7 @@ const AdminDashboard = () => {
     pending_orders: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     fetchDashboardStats();
@@ -28,10 +29,15 @@ const AdminDashboard = () => {
 
   const fetchDashboardStats = async () => {
     try {
+      setLoading(true);
+      setError('');
       const response = await adminAPI.getDashboardStats();
+      console.log('Dashboard stats:', response.data);
       setStats(response.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching stats:', error);
+      console.error('Error response:', error.response?.data);
+      setError(error.response?.data?.detail || 'Error loading dashboard stats');
     } finally {
       setLoading(false);
     }
@@ -41,6 +47,22 @@ const AdminDashboard = () => {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="loading-spinner"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container-custom py-12">
+        <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 text-center">
+          <p className="text-red-600 font-semibold">{error}</p>
+          <button 
+            onClick={fetchDashboardStats}
+            className="mt-4 btn-primary"
+          >
+            Retry
+          </button>
+        </div>
       </div>
     );
   }

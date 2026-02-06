@@ -181,9 +181,9 @@ const Navbar = () => {
               </div>
             </>
           ) : (
-            <Link to="/register" className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-heading font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-              Sign Up
-            </Link>
+           <Link to="/login" className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-heading font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+            Login
+           </Link>
           )}
 
           {/* Cart Icon */}

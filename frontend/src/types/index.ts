@@ -1,5 +1,4 @@
-import storage from "redux-persist/lib/storage";
-
+// User Types
 export interface User {
   id: number;
   username: string;
@@ -11,36 +10,43 @@ export interface User {
   city?: string;
   country?: string;
   postal_code?: string;
-  is_staff: boolean;           // Added
-  is_superuser: boolean;        // Added
-  is_active: boolean;           // Added
-  date_joined: string;          // Added
-  last_login?: string;          // Added (optional)
+  is_staff: boolean;
+  is_superuser: boolean;
+  is_active: boolean;
+  date_joined: string;
+  last_login?: string;
+  total_orders?: number;
+  total_spent?: number;
 }
 
+// Category Types
 export interface Category {
   id: number;
   name: string;
-  slug: string;
+  slug?: string;
   description?: string;
-  image?: string;               // Added (if you have category images)
+  image?: string;
+  products_count?: number;
   created_at: string;
+  updated_at?: string;
 }
 
+// Product Types
 export interface Product {
   id: number;
-  category: Category;
+  category: number | Category;
+  category_name?: string;
   name: string;
-  slug: string;
+  slug?: string;
   description: string;
-  price: string;
+  price: string | number;
   stock: number;
   image?: string;
   is_available: boolean;
   created_at: string;
   updated_at: string;
-  reviews: Review[];
-  average_rating: number;
+  reviews?: Review[];
+  average_rating?: number;
 }
 
 export interface Review {
@@ -51,6 +57,7 @@ export interface Review {
   created_at: string;
 }
 
+// Cart Types
 export interface CartItem {
   id: number;
   product: Product;
@@ -66,37 +73,45 @@ export interface Cart {
   updated_at: string;
 }
 
+// Order Types
 export interface OrderItem {
   id: number;
-  product: Product;
+  product: number | Product;
+  product_name?: string;
+  product_image?: string;
   quantity: number;
-  price: string;
-  subtotal: number;
+  price: string | number;
+  subtotal?: number;
 }
 
 export interface Order {
   id: number;
-  order_number?: string;        // Added
-  user: string;
+  order_number?: string;
+  user: number | string;
+  user_email?: string;
+  user_name?: string;
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
-  payment_status: 'pending' | 'paid' | 'failed' | 'refunded';  // Added
-  total_amount: string;
+  payment_status: 'pending' | 'paid' | 'failed' | 'refunded';
+  total_amount: string | number;
   shipping_address: string;
   shipping_city: string;
-  shipping_state?: string;      // Added
-  shipping_country: string;
-  shipping_postal_code: string;
-  shipping_phone?: string;      // Added
-  phone: string;
+  shipping_state?: string;
+  shipping_country?: string;
+  shipping_postal_code?: string;
+  shipping_pincode?: string;
+  shipping_phone?: string;
+  phone?: string;
   payment_method: string;
-  is_paid: boolean;
+  is_paid?: boolean;
   paid_at?: string;
   tracking_number?: string;
   created_at: string;
   updated_at: string;
   items: OrderItem[];
+  items_count?: number;
 }
 
+// Auth State
 export interface AuthState {
   user: User | null;
   token: string | null;
@@ -105,6 +120,7 @@ export interface AuthState {
   error: string | null;
 }
 
+// Cart State
 export interface CartState {
   items: CartItem[];
   total: number;
@@ -112,6 +128,7 @@ export interface CartState {
   error: string | null;
 }
 
+// Product State
 export interface ProductState {
   products: Product[];
   categories: Category[];
@@ -125,9 +142,10 @@ export interface ProductState {
   };
 }
 
+// Auth Types
 export interface LoginCredentials {
-  email?: string;               // Made optional
-  username?: string;            // Added for username login
+  email?: string;
+  username?: string;
   password: string;
 }
 
@@ -138,13 +156,13 @@ export interface RegisterData {
   password2: string;
   first_name?: string;
   last_name?: string;
-  phone?: string;               // Added
+  phone?: string;
 }
 
 export interface CheckoutData {
   shipping_address: string;
   shipping_city: string;
-  shipping_state?: string;      // Added
+  shipping_state?: string;
   shipping_country: string;
   shipping_postal_code: string;
   phone: string;
@@ -156,7 +174,7 @@ export interface AdminStats {
   total_products: number;
   total_orders: number;
   total_users: number;
-  total_revenue: string;
+  total_revenue: number;
   low_stock_products: number;
   pending_orders: number;
 }
@@ -167,7 +185,7 @@ export interface AdminProduct extends Product {
 
 export interface AdminUser extends User {
   total_orders?: number;
-  total_spent?: string;
+  total_spent?: number;
 }
 
 export interface AdminOrder extends Order {

@@ -11,7 +11,7 @@ class AdminDashboardStatsSerializer(serializers.Serializer):
     total_products = serializers.IntegerField()
     total_orders = serializers.IntegerField()
     total_users = serializers.IntegerField()
-    total_revenue = serializers.DecimalField(max_digits=10, decimal_places=2)
+    total_revenue = serializers.FloatField()
     low_stock_products = serializers.IntegerField()
     pending_orders = serializers.IntegerField()
 

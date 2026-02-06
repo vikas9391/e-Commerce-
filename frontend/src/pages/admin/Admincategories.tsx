@@ -27,8 +27,12 @@ const AdminCategories = () => {
 
   const fetchCategories = async () => {
     try {
+      setLoading(true);
       const response = await adminAPI.getCategories();
-      setCategories(response.data.results || response.data);
+      const data = response.data;
+      // Handle both paginated and non-paginated responses
+      const categoriesData = Array.isArray(data) ? data : (data as any).results || [];
+      setCategories(categoriesData);
     } catch (error) {
       console.error('Error fetching categories:', error);
     } finally {

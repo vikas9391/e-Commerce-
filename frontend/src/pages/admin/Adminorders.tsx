@@ -26,11 +26,14 @@ const AdminOrders = () => {
 
   const fetchOrders = async () => {
     try {
+      setLoading(true);
       const params: any = {};
       if (statusFilter) params.status = statusFilter;
       
       const response = await adminAPI.getOrders(params);
-      setOrders(response.data.results || response.data);
+      const data = response.data;
+      const ordersData = Array.isArray(data) ? data : (data as any).results || [];
+      setOrders(ordersData);
     } catch (error) {
       console.error('Error fetching orders:', error);
     } finally {

@@ -1,5 +1,18 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { Product, Category, Cart, Order, User, LoginCredentials, RegisterData, CheckoutData } from '../types';
+import { 
+  Product, 
+  Category, 
+  Cart, 
+  Order, 
+  User, 
+  LoginCredentials, 
+  RegisterData, 
+  CheckoutData,
+  AdminStats,
+  PaginatedResponse,
+  LoginResponse,
+  RegisterResponse
+} from '../types';
 
 const API_URL = 'http://localhost:8000/api';
 
@@ -38,10 +51,10 @@ api.interceptors.response.use(
 
 // Auth API
 export const authAPI = {
-  register: (data: RegisterData): Promise<AxiosResponse<{ user: User; access: string; refresh: string }>> =>
+  register: (data: RegisterData): Promise<AxiosResponse<RegisterResponse>> =>
     api.post('/auth/register/', data),
   
-  login: (data: LoginCredentials): Promise<AxiosResponse<{ access: string; refresh: string }>> =>
+  login: (data: LoginCredentials): Promise<AxiosResponse<LoginResponse>> =>
     api.post('/auth/login/', data),
   
   logout: (refreshToken: string): Promise<AxiosResponse> =>
@@ -56,7 +69,7 @@ export const authAPI = {
 
 // Products API
 export const productsAPI = {
-  getAll: (params?: Record<string, any>): Promise<AxiosResponse<{ results: Product[]; count: number; next: string | null; previous: string | null }>> =>
+  getAll: (params?: Record<string, any>): Promise<AxiosResponse<PaginatedResponse<Product>>> =>
     api.get('/products/', { params }),
   
   getBySlug: (slug: string): Promise<AxiosResponse<Product>> =>
@@ -105,27 +118,29 @@ export const ordersAPI = {
 // Admin API
 export const adminAPI = {
   // Dashboard
-  getDashboardStats: (): Promise<AxiosResponse<{
-    total_products: number;
-    total_orders: number;
-    total_users: number;
-    total_revenue: number;
-    low_stock_products: number;
-    pending_orders: number;
-  }>> =>
+  getDashboardStats: (): Promise<AxiosResponse<AdminStats>> =>
     api.get('/admin-panel/dashboard/stats/'),
   
   getRecentOrders: (): Promise<AxiosResponse<Order[]>> =>
     api.get('/admin-panel/dashboard/recent_orders/'),
   
   getSalesAnalytics: (): Promise<AxiosResponse<{
-    daily_sales: any[];
-    top_products: any[];
+    daily_sales: Array<{
+      day: string;
+      total: number;
+      count: number;
+    }>;
+    top_products: Array<{
+      product__name: string;
+      product__id: number;
+      total_quantity: number;
+      total_revenue: number;
+    }>;
   }>> =>
     api.get('/admin-panel/dashboard/sales_analytics/'),
   
   // Products
-  getProducts: (params?: Record<string, any>): Promise<AxiosResponse<{ results: Product[]; count: number } | Product[]>> =>
+  getProducts: (params?: Record<string, any>): Promise<AxiosResponse<PaginatedResponse<Product> | Product[]>> =>
     api.get('/admin-panel/products/', { params }),
   
   getProduct: (id: number): Promise<AxiosResponse<Product>> =>
@@ -155,7 +170,7 @@ export const adminAPI = {
     api.post(`/admin-panel/products/${id}/update_stock/`, { stock }),
   
   // Users
-  getUsers: (params?: Record<string, any>): Promise<AxiosResponse<User[]>> =>
+  getUsers: (params?: Record<string, any>): Promise<AxiosResponse<PaginatedResponse<User> | User[]>> =>
     api.get('/admin-panel/users/', { params }),
   
   getUser: (id: number): Promise<AxiosResponse<User>> =>
@@ -174,7 +189,7 @@ export const adminAPI = {
     api.post(`/admin-panel/users/${id}/toggle_staff/`),
   
   // Orders
-  getOrders: (params?: Record<string, any>): Promise<AxiosResponse<Order[]>> =>
+  getOrders: (params?: Record<string, any>): Promise<AxiosResponse<PaginatedResponse<Order> | Order[]>> =>
     api.get('/admin-panel/orders/', { params }),
   
   getOrder: (id: number): Promise<AxiosResponse<Order>> =>
@@ -187,7 +202,7 @@ export const adminAPI = {
     api.post(`/admin-panel/orders/${id}/update_payment_status/`, { payment_status }),
   
   // Categories
-  getCategories: (params?: Record<string, any>): Promise<AxiosResponse<Category[]>> =>
+  getCategories: (params?: Record<string, any>): Promise<AxiosResponse<PaginatedResponse<Category> | Category[]>> =>
     api.get('/admin-panel/categories/', { params }),
   
   getCategory: (id: number): Promise<AxiosResponse<Category>> =>

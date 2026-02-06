@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from products.models import Product
+import uuid
 
 User = get_user_model()
 
@@ -13,15 +14,27 @@ class Order(models.Model):
         ('cancelled', 'Cancelled'),
     ]
     
+    PAYMENT_STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('paid', 'Paid'),
+        ('failed', 'Failed'),
+        ('refunded', 'Refunded'),
+    ]
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    order_number = models.CharField(max_length=100, unique=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='pending')
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     
     # Shipping information
     shipping_address = models.TextField()
     shipping_city = models.CharField(max_length=100)
+    shipping_state = models.CharField(max_length=100, blank=True)
     shipping_country = models.CharField(max_length=100)
     shipping_postal_code = models.CharField(max_length=20)
+    shipping_pincode = models.CharField(max_length=20, blank=True)
+    shipping_phone = models.CharField(max_length=15, blank=True)
     phone = models.CharField(max_length=15)
     
     # Payment information
@@ -38,8 +51,24 @@ class Order(models.Model):
     class Meta:
         ordering = ['-created_at']
     
+    def save(self, *args, **kwargs):
+        if not self.order_number:
+            # Generate order number: ORD-YYYYMMDD-XXXX
+            from django.utils import timezone
+            date_str = timezone.now().strftime('%Y%m%d')
+            unique_id = str(uuid.uuid4().hex[:8].upper())
+            self.order_number = f'ORD-{date_str}-{unique_id}'
+        
+        # Sync payment_status with is_paid
+        if self.is_paid and self.payment_status == 'pending':
+            self.payment_status = 'paid'
+        elif self.payment_status == 'paid' and not self.is_paid:
+            self.is_paid = True
+            
+        super().save(*args, **kwargs)
+    
     def __str__(self):
-        return f'Order {self.id} by {self.user.email}'
+        return f'Order {self.order_number} by {self.user.email}'
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)

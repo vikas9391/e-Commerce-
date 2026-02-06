@@ -35,10 +35,10 @@ class AdminDashboardViewSet(viewsets.ViewSet):
         # Total orders
         total_orders = Order.objects.count()
         
-        # Total users
+        # Total users (exclude superusers)
         total_users = User.objects.filter(is_superuser=False).count()
         
-        # Total revenue (from completed/delivered orders)
+        # Total revenue (from paid orders)
         total_revenue = Order.objects.filter(
             payment_status='paid'
         ).aggregate(
@@ -57,13 +57,14 @@ class AdminDashboardViewSet(viewsets.ViewSet):
             'total_products': total_products,
             'total_orders': total_orders,
             'total_users': total_users,
-            'total_revenue': total_revenue,
+            'total_revenue': float(total_revenue),
             'low_stock_products': low_stock_products,
             'pending_orders': pending_orders
         }
         
-        serializer = AdminDashboardStatsSerializer(data)
-        return Response(serializer.data)
+        serializer = AdminDashboardStatsSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.validated_data)
     
     @action(detail=False, methods=['get'])
     def recent_orders(self, request: Request) -> Response:
@@ -169,7 +170,7 @@ class AdminUserViewSet(viewsets.ModelViewSet):
     """ViewSet for user management"""
     serializer_class = AdminUserSerializer
     permission_classes = [IsAdminUser]
-    queryset = User.objects.none()  # Add base queryset for type checking
+    queryset = User.objects.none()
     
     def get_queryset(self) -> QuerySet[Any]:
         queryset = User.objects.annotate(
@@ -238,7 +239,7 @@ class AdminOrderViewSet(viewsets.ModelViewSet):
     """ViewSet for order management"""
     serializer_class = AdminOrderSerializer
     permission_classes = [IsAdminUser]
-    queryset = Order.objects.none()  # Add base queryset for type checking
+    queryset = Order.objects.none()
     
     def get_queryset(self) -> QuerySet[Order]:
         queryset = Order.objects.select_related('user').prefetch_related('items__product').annotate(
@@ -314,7 +315,7 @@ class AdminCategoryViewSet(viewsets.ModelViewSet):
     """ViewSet for category management"""
     serializer_class = AdminCategorySerializer
     permission_classes = [IsAdminUser]
-    queryset = Category.objects.none()  # Add base queryset for type checking
+    queryset = Category.objects.none()
     
     def get_queryset(self) -> QuerySet[Category]:
         queryset = Category.objects.annotate(
