@@ -16,16 +16,16 @@ import Orders from './pages/Orders';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import Settings from './pages/Settings';
 
-// Admin Pages
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminProducts from './pages/admin/AdminProducts';
 import AdminProductForm from './pages/admin/Adminproductform';
 import AdminOrders from './pages/admin/Adminorders';
 import AdminUsers from './pages/admin/Adminusers';
 import AdminCategories from './pages/admin/Admincategories';
 import PrescriptionUpload from './pages/Prescriptionupload';
+import Settings from "./pages/Settings.tsx";
+import AdminDashboard from "./pages/admin/AdminDashboard.tsx";
+import AdminProducts from "./pages/admin/AdminProducts.tsx";
+
 
 function App() {
   return (
