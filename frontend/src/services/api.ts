@@ -14,7 +14,7 @@ import {
   RegisterResponse
 } from '../types';
 
-const API_URL = 'http://medicom.onrender.com/api';
+const API_URL = 'https://medicom.onrender.com/api';
 
 const api: AxiosInstance = axios.create({
   baseURL: API_URL,
