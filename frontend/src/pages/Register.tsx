@@ -18,15 +18,18 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
+    setShowErrorPopup(false);
 
     if (formData.password !== formData.password2) {
       setError('Passwords do not match');
+      setShowErrorPopup(true);
       return;
     }
 
@@ -37,14 +40,56 @@ const Register = () => {
       dispatch(loginSuccess({ user: response.data.user, access: response.data.access }));
       navigate('/');
     } catch (err: any) {
-      setError(err.response?.data?.email?.[0] || err.response?.data?.username?.[0] || 'Registration failed');
+      const errorMessage = err.response?.data?.email?.[0] || err.response?.data?.username?.[0] || 'Registration failed';
+      setError(errorMessage);
+      setShowErrorPopup(true);
     } finally {
       setLoading(false);
     }
   };
 
+  const closeErrorPopup = () => {
+    setShowErrorPopup(false);
+    setError('');
+  };
+
   return (
     <div className="min-h-[calc(100vh-80px)] flex items-center justify-center p-8 bg-gradient-to-br from-blue-50 via-white to-cyan-50">
+      {/* Error Popup Modal */}
+      {showErrorPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 animate-fadeIn">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-slideDown">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-gray-900 mb-1">Registration Error</h3>
+                <p className="text-gray-600 text-sm">{error}</p>
+              </div>
+              <button
+                onClick={closeErrorPopup}
+                className="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={closeErrorPopup}
+                className="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
+              >
+                Try Again
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white rounded-3xl p-12 max-w-2xl w-full shadow-2xl border border-gray-100 relative animate-fadeInUp">
         {/* Decorative gradient blur */}
         <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
@@ -66,15 +111,6 @@ const Register = () => {
             </h1>
             <p className="text-gray-600 text-lg">Join MediCare for quality healthcare products</p>
           </div>
-
-          {error && (
-            <div className="bg-red-50 text-red-700 p-4 rounded-xl mb-6 border-l-4 border-red-500 flex items-start gap-3 animate-slideDown shadow-sm">
-              <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm font-medium">{error}</span>
-            </div>
-          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-2 gap-5">
