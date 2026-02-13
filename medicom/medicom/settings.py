@@ -81,6 +81,11 @@ DATABASES = {
     )
 }
 
+DATABASES['default']['OPTIONS'] = {
+    'sslmode': 'require',
+}
+
+
 CSRF_TRUSTED_ORIGINS = [
     "https://medicom.onrender.com",
     "https://*.onrender.com"
