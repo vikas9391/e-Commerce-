@@ -81,6 +81,11 @@ DATABASES = {
     )
 }
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://medicom.onrender.com",
+    "https://*.onrender.com"
+]
+
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -145,3 +150,15 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
