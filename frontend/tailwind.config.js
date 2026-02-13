@@ -42,7 +42,7 @@ export default {
 
       /* ================= TYPOGRAPHY ================= */
       fontFamily: {
-        heading: ['Inter', 'system-ui', 'sans-serif'],
+        heading: ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
         body: ['Inter', 'system-ui', 'sans-serif'],
       },
 
@@ -63,9 +63,11 @@ export default {
         fadeIn: 'fadeIn 0.3s ease-in-out',
         fadeInUp: 'fadeInUp 0.5s ease-out',
         slideDown: 'slideDown 0.3s ease-out',
+        slideInRight: 'slideInRight 0.3s ease-out',
         scaleIn: 'scaleIn 0.4s ease-out',
         float: 'float 6s ease-in-out infinite',
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        spin: 'spin 1s linear infinite',
       },
 
       keyframes: {
@@ -93,6 +95,16 @@ export default {
             transform: 'translateY(0)',
           },
         },
+        slideInRight: {
+          '0%': { 
+            transform: 'translateX(100%)',
+            opacity: '0' 
+          },
+          '100%': { 
+            transform: 'translateX(0)',
+            opacity: '1' 
+          },
+        },
         scaleIn: {
           '0%': { opacity: '0', transform: 'scale(0.95)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
@@ -100,6 +112,10 @@ export default {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-20px)' },
+        },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
         },
       },
 

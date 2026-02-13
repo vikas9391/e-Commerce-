@@ -25,6 +25,7 @@ import AdminProductForm from './pages/admin/Adminproductform';
 import AdminOrders from './pages/admin/Adminorders';
 import AdminUsers from './pages/admin/Adminusers';
 import AdminCategories from './pages/admin/Admincategories';
+import PrescriptionUpload from './pages/Prescriptionupload';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/prescriptionupload" element={<PrescriptionUpload />} />
 
             {/* Protected Routes */}
             <Route

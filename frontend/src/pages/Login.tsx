@@ -1,8 +1,9 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../store/slices/authSlice';
 import { authAPI } from '../services/api';
+import { useAppSelector } from '../store/hooks';
 
 const Login = () => {
   const [formData, setFormData] = useState({ emailOrUsername: '', password: '' });
@@ -11,6 +12,25 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+
+  // Check if already authenticated and redirect accordingly
+  useEffect(() => {
+    if (isAuthenticated) {
+      const redirectPath = sessionStorage.getItem('redirectAfterLogin');
+      if (redirectPath) {
+        sessionStorage.removeItem('redirectAfterLogin');
+        navigate(redirectPath);
+      } else {
+        // Default redirect based on user role
+        if (user?.is_superuser || user?.is_staff) {
+          navigate('/admin/dashboard');
+        } else {
+          navigate('/');
+        }
+      }
+    }
+  }, [isAuthenticated, user, navigate]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -45,11 +65,18 @@ const Login = () => {
       
       dispatch(loginSuccess({ user: userData, access }));
       
-      // Check if user is admin/superuser
-      if (userData.is_superuser || userData.is_staff) {
-        navigate('/admin/dashboard');
+      // Check for redirect path first
+      const redirectPath = sessionStorage.getItem('redirectAfterLogin');
+      if (redirectPath) {
+        sessionStorage.removeItem('redirectAfterLogin');
+        navigate(redirectPath);
       } else {
-        navigate('/');
+        // Default redirect based on user role
+        if (userData.is_superuser || userData.is_staff) {
+          navigate('/admin/dashboard');
+        } else {
+          navigate('/');
+        }
       }
     } catch (err: any) {
       console.error('Login error:', err);
