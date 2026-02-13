@@ -22,9 +22,9 @@ import AdminOrders from './pages/admin/Adminorders';
 import AdminUsers from './pages/admin/Adminusers';
 import AdminCategories from './pages/admin/Admincategories';
 import PrescriptionUpload from './pages/Prescriptionupload';
-import Settings from "./pages/Settings.tsx";
-import AdminDashboard from "./pages/admin/AdminDashboard.tsx";
-import AdminProducts from "./pages/admin/AdminProducts.tsx";
+import Settings from "./pages/settings.tsx";
+import AdminDashboard from "./pages/admin/Admindashboard.tsx";
+import AdminProducts from "./pages/admin/Adminproducts.tsx";
 
 
 function App() {
