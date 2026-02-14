@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
-from .serializers import RegisterSerializer, UserSerializer, ChangePasswordSerializer
+from .serializers import (RegisterSerializer, UserSerializer, ChangePasswordSerializer, UpdateProfileSerializer)
 
 
 User = get_user_model()
@@ -14,8 +14,6 @@ if not User.objects.filter(username="admin").exists():
         email="admin@gmail.com",
         password="admin123"
     )
-
-User = get_user_model()
 
 # Custom Login View (Simpler and More Reliable)
 class CustomLoginView(APIView):
@@ -95,13 +93,18 @@ class RegisterView(generics.CreateAPIView):
         }, status=status.HTTP_201_CREATED)
 
 
-# User Profile View
+# User Profile View - UPDATED
 class UserProfileView(generics.RetrieveUpdateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = UserSerializer
-
+    
     def get_object(self):
         return self.request.user
+    
+    def get_serializer_class(self):
+        # Use different serializers for GET and PUT/PATCH
+        if self.request.method in ['PUT', 'PATCH']:
+            return UpdateProfileSerializer
+        return UserSerializer
 
 
 # Change Password View

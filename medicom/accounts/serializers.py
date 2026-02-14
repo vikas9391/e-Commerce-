@@ -10,7 +10,21 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'first_name', 'last_name', 
                   'phone', 'address', 'city', 'country', 'postal_code',
                   'is_staff', 'is_superuser', 'is_active', 'date_joined')
-        read_only_fields = ('id', 'is_staff', 'is_superuser', 'is_active', 'date_joined')
+        read_only_fields = ('id', 'username', 'email', 'is_staff', 'is_superuser', 
+                           'is_active', 'date_joined')
+
+# Add this new serializer for profile updates
+class UpdateProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'phone', 'address', 'city', 
+                  'country', 'postal_code')
+        
+    def validate_phone(self, value):
+        # Optional: Add phone number validation
+        if value and len(value) > 15:
+            raise serializers.ValidationError("Phone number is too long")
+        return value
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
