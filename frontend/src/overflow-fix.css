@@ -1,0 +1,60 @@
+/* CRITICAL MOBILE OVERFLOW FIX - Add this at the TOP of your index.css or as a separate file */
+
+/* Force no horizontal overflow anywhere */
+html, body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure all elements respect boundaries */
+* {
+  box-sizing: border-box !important;
+}
+
+/* Fix root container */
+#root {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Fix any containers that might overflow */
+.container,
+.container-custom,
+.container-sm,
+[class*="container"] {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* Ensure images and media don't cause overflow */
+img,
+video,
+iframe,
+svg {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Fix for elements with fixed widths */
+[style*="width"] {
+  max-width: 100% !important;
+}
+
+/* Prevent decorative elements from causing overflow */
+.absolute,
+[class*="absolute"] {
+  max-width: 100vw !important;
+}
+
+/* Fix for blur effects that might extend beyond viewport */
+[class*="blur"],
+[class*="gradient"] {
+  overflow: hidden !important;
+}
