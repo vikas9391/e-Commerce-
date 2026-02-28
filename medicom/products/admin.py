@@ -1,5 +1,5 @@
-from .models import Category, Product, Review, ContactMessage, FAQ
-
+from django.contrib import admin
+from .models import ContactMessage, FAQ
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
