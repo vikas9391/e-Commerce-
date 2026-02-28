@@ -76,3 +76,51 @@ class Review(models.Model):
     
     def __str__(self):
         return f'{self.user.username} - {self.product.name}'
+    
+class ContactMessage(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('read', 'Read'),
+        ('replied', 'Replied'),
+    ]
+
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    subject = models.CharField(max_length=300)
+    message = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Contact Message'
+        verbose_name_plural = 'Contact Messages'
+
+    def __str__(self):
+        return f'{self.name} — {self.subject}'
+
+
+class FAQ(models.Model):
+    CATEGORY_CHOICES = [
+        ('orders', 'Orders & Delivery'),
+        ('medicines', 'Medicines & Prescriptions'),
+        ('payments', 'Payments & Refunds'),
+        ('account', 'Account & Privacy'),
+        ('general', 'General'),
+    ]
+
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='general')
+    question = models.CharField(max_length=500)
+    answer = models.TextField()
+    order = models.PositiveIntegerField(default=0, help_text='Lower number appears first')
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['category', 'order', 'created_at']
+        verbose_name = 'FAQ'
+        verbose_name_plural = 'FAQs'
+
+    def __str__(self):
+        return self.question

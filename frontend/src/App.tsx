@@ -25,6 +25,13 @@ import PrescriptionUpload from './pages/Prescriptionupload';
 import Settings from "./pages/settings.tsx";
 import AdminDashboard from "./pages/admin/Admindashboard.tsx";
 import AdminProducts from "./pages/admin/Adminproducts.tsx";
+import ContactUs      from './pages/ContactUs';
+import FAQ            from './pages/FAQ';
+import ShippingPolicy from './pages/ShippingPolicy';
+import ReturnPolicy   from './pages/ReturnPolicy';
+import PrivacyPolicy  from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+
 
 
 function App() {
@@ -41,6 +48,13 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/prescriptionupload" element={<PrescriptionUpload />} />
+            <Route path="/contact"  element={<ContactUs />} />
+            <Route path="/faq"      element={<FAQ />} />
+            <Route path="/shipping" element={<ShippingPolicy />} />
+            <Route path="/returns"  element={<ReturnPolicy />} />
+            <Route path="/privacy"  element={<PrivacyPolicy />} />
+            <Route path="/terms"    element={<TermsOfService />} />
+
 
             {/* Protected Routes */}
             <Route
