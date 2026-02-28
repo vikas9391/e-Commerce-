@@ -2,22 +2,21 @@ from rest_framework import viewsets, filters, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Category, Product, Review,ContactMessage, FAQ
-from .serializers import CategorySerializer, ProductSerializer, ReviewSerializer,ContactMessageSerializer, FAQSerializer
+from .models import Category, Product, Review, ContactMessage, FAQ
+from .serializers import CategorySerializer, ProductSerializer, ReviewSerializer, ContactMessageSerializer, FAQSerializer
 from rest_framework.views import APIView
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
 from django.conf import settings
-from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def check_cloudinary(request):
     import cloudinary
-    from django.conf import settings
     c = cloudinary.config()
     return Response({
         'cloud_name': c.cloud_name,
@@ -25,6 +24,7 @@ def check_cloudinary(request):
         'has_secret': bool(c.api_secret),
         'default_storage': settings.DEFAULT_FILE_STORAGE,
     })
+
 
 class ContactMessageView(APIView):
     """
@@ -42,23 +42,25 @@ class ContactMessageView(APIView):
         # Save to database
         contact = serializer.save()
 
+        errors = []
+
         # Send email to admin/support team
         try:
             self._send_admin_notification(contact)
         except Exception as e:
-            # Log error but don't fail the request — message is already saved
-            print(f'[ContactMessage] Failed to send admin email: {e}')
+            errors.append(f'Admin email failed: {str(e)}')
 
         # Send confirmation email to user
         try:
             self._send_user_confirmation(contact)
         except Exception as e:
-            print(f'[ContactMessage] Failed to send user confirmation email: {e}')
+            errors.append(f'User email failed: {str(e)}')
 
         return Response(
             {
                 'success': True,
                 'message': 'Your message has been received. We will get back to you within 24 hours.',
+                'email_errors': errors,  # ← remove this line once emails are working
             },
             status=status.HTTP_201_CREATED,
         )
@@ -76,14 +78,15 @@ class ContactMessageView(APIView):
             f'Received at: {contact.created_at.strftime("%d %b %Y, %I:%M %p")}\n'
             f'Reply directly to {contact.email}'
         )
-        send_mail(
+        # Use EmailMessage instead of send_mail so reply_to works correctly
+        email = EmailMessage(
             subject=subject,
-            message=body,
+            body=body,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.SUPPORT_EMAIL],
+            to=[settings.SUPPORT_EMAIL],
             reply_to=[contact.email],
-            fail_silently=False,
         )
+        email.send(fail_silently=False)
 
     def _send_user_confirmation(self, contact: ContactMessage):
         """Send an acknowledgement email to the user."""
@@ -158,10 +161,12 @@ class FAQViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(category=category)
         return queryset
 
+
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     lookup_field = 'slug'
+
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
@@ -171,30 +176,28 @@ class ProductViewSet(viewsets.ModelViewSet):
     filterset_fields = ['category', 'is_available']
     search_fields = ['name', 'description']
     ordering_fields = ['price', 'created_at', 'name']
-    
+
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [permissions.IsAdminUser()]
         return [permissions.AllowAny()]
-    
+
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def add_review(self, request, slug=None):
         product = self.get_object()
         serializer = ReviewSerializer(data=request.data)
-        
+
         if serializer.is_valid():
-            # Check if user already reviewed
             if Review.objects.filter(product=product, user=request.user).exists():
                 return Response(
                     {'error': 'You have already reviewed this product'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-            
             serializer.save(user=request.user, product=product)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     @action(detail=True, methods=['get'])
     def reviews(self, request, slug=None):
         product = self.get_object()
