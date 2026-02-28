@@ -1,15 +1,22 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
+from cloudinary_storage.storage import MediaCloudinaryStorage
 
 
 User = get_user_model()
+
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='categories/', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='categories/',
+        blank=True,
+        null=True,
+        storage=MediaCloudinaryStorage()  # ← explicit Cloudinary storage
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -17,16 +24,15 @@ class Category(models.Model):
         ordering = ['name']
 
     def save(self, *args, **kwargs):
-     if not self.slug:
-        base_slug = slugify(self.name)
-        slug = base_slug
-        num = 1
-        while Category.objects.filter(slug=slug).exists():
-            slug = f"{base_slug}-{num}"
-            num += 1
-        self.slug = slug
-     super().save(*args, **kwargs)
-
+        if not self.slug:
+            base_slug = slugify(self.name)
+            slug = base_slug
+            num = 1
+            while Category.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{num}"
+                num += 1
+            self.slug = slug
+        super().save(*args, **kwargs)  # ← always called, outside the if block
 
     def __str__(self):
         return self.name
@@ -39,7 +45,12 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField(default=0)
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='products/',
+        blank=True,
+        null=True,
+        storage=MediaCloudinaryStorage()  # ← explicit Cloudinary storage
+    )
     is_available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -48,16 +59,15 @@ class Product(models.Model):
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
-       if not self.slug:
-        base_slug = slugify(self.name)
-        slug = base_slug
-        num = 1
-        while Product.objects.filter(slug=slug).exists():
-            slug = f"{base_slug}-{num}"
-            num += 1
-        self.slug = slug
-        super().save(*args, **kwargs)
-
+        if not self.slug:
+            base_slug = slugify(self.name)
+            slug = base_slug
+            num = 1
+            while Product.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{num}"
+                num += 1
+            self.slug = slug
+        super().save(*args, **kwargs)  # ← always called, outside the if block
 
     def __str__(self):
         return self.name
@@ -69,14 +79,15 @@ class Review(models.Model):
     rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         ordering = ['-created_at']
         unique_together = ('product', 'user')
-    
+
     def __str__(self):
         return f'{self.user.username} - {self.product.name}'
-    
+
+
 class ContactMessage(models.Model):
     STATUS_CHOICES = [
         ('new', 'New'),
