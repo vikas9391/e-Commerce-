@@ -10,6 +10,21 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def check_cloudinary(request):
+    import cloudinary
+    from django.conf import settings
+    c = cloudinary.config()
+    return Response({
+        'cloud_name': c.cloud_name,
+        'api_key': c.api_key,
+        'has_secret': bool(c.api_secret),
+        'default_storage': settings.DEFAULT_FILE_STORAGE,
+    })
 
 class ContactMessageView(APIView):
     """
